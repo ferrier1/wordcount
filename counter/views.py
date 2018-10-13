@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Word, Hash
+from .models import Word, Hash, Counter
 from django.template import Context, Template
 from newsapi import NewsApiClient
 import hashlib
@@ -27,7 +27,8 @@ def update():
                 if Hash.objects.filter(hash=key).exists():
                     print("yes")
                 elif Word.objects.filter(word=word).exists():
-                    print(current_words.number_of)
+                    current_words.number_of = current_words.number_of + 1
+                    current_words.save()
                 else:
                     current_words.pk = None
                     current_words.word = word
