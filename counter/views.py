@@ -27,22 +27,28 @@ def update():
         x['description'].split()}
         for key in data:
             for word in data[key]:
-                print(word, key)
+                #print(word, key)
                 if Hash.objects.filter(hash=key).exists():
                     print("skipping")
                 elif Word.objects.filter(word=word).exists():
                     counter = Word.objects.get(word=word)
                     counter.number_of += 1
                     counter.save()
-                    test = Word.objects.get(word=word)
-                    current_hashes.word = test
+                    test = Hash.objects.get(hash=key)
+                    current_words.word = word
+                    current_hashes.hash = test
+                    current_hashes.save()
+                    print("word exists")
+                else:
+                    print(key)
+                    current_hashes.pk = None
                     current_hashes.hash = key
                     current_hashes.save()
-                else:
                     current_words.pk = None
+                    test = Hash.objects.get(hash=key)
+                    current_words.hash = test
                     current_words.word = word
                     current_words.save()
-
 
 
 
